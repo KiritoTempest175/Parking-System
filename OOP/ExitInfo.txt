@@ -1,0 +1,92 @@
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 1
+Driver Name: Huzaifa
+License Plate: AK-768
+Slot No: 11 (Now Available)
+Vehicle Type: Car
+Entry Time: 2025-06-01 18:39:27
+Exit Time: 2025-06-01T18:41:19.865463300
+Hours Parked: 2.0
+Required Payment: Rs. 0.00
+Amount Received: Rs. 140
+Change Returned: Rs. 140.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 2
+Driver Name: Maaz
+License Plate: JT-238
+Slot No: 11 (Now Available)
+Vehicle Type: Jeep
+Entry Time: 2025-06-01 18:49:11
+Exit Time: 2025-06-01T18:55:50.283354100
+Hours Parked: 0.333334
+Required Payment: Rs. 0.00
+Amount Received: Rs. 34
+Change Returned: Rs. 34.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 3
+Driver Name: huzaifa
+License Plate: 12
+Slot No: 12 (Now Available)
+Vehicle Type: Wagon
+Entry Time: 2025-06-01 19:13:41
+Exit Time: 2025-06-01 19:15:09
+Hours Parked: 0.02
+Required Payment: Rs. 150.00
+Amount Received: Rs. 150.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 5
+Driver Name: Hanzla
+License Plate: 1234
+Slot No: 13 (Now Available)
+Vehicle Type: Car
+Entry Time: 2025-06-01 19:32:24
+Exit Time: 2025-06-01 19:34:08
+Hours Parked: 0.02
+Required Payment: Rs. 70.00
+Amount Received: Rs. 70.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 10
+Driver Name: huzaifa
+License Plate: 123
+Slot No: 50 (Now Available)
+Vehicle Type: Car
+Entry Time: 2025-06-01 19:37:17
+Exit Time: 2025-06-01 19:38:47
+Hours Parked: 0.02
+Required Payment: Rs. 70.00
+Amount Received: Rs. 70.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+
+=== VEHICLE EXIT COMPLETED ===
+Receipt No: 36
+Driver Name: Huzaifa
+License Plate: jt-238
+Slot No: 85 (Now Available)
+Vehicle Type: Car
+Entry Time: 2025-06-13 17:28:03
+Exit Time: 2025-06-13 17:31:37
+Hours Parked: 0.05
+Required Payment: Rs. 70.00
+Amount Received: Rs. 70.00
+Payment Status: PAID
+Status: Vehicle exited successfully
+===============================
+

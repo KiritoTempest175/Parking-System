@@ -1,0 +1,4 @@
+admin@gmail.com 1234 X Admin 
+huzaifa@gmail.com 7096 A Huzaifa 
+maaz@gmail.com 7091 B Maaz 
+ijlal@gmail.com 7072 C Ijlal 

@@ -1,0 +1,6 @@
+Car 35.0
+Bike 15.0
+Jeep 60.0
+Wagon 300.0
+Truck 375.0
+Handicap 100.0

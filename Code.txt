@@ -1,0 +1,2517 @@
+Code for Parking Management System:
+
+Admin::
+import java.io.*;
+
+class Admin {
+    private static String admin1;
+    private static String admin2;
+    private static String admin3;
+    private static String pass1;
+    private static String pass2;
+    private static String pass3;
+
+    private static String Login;
+    private static String Password;
+
+    public static void defaultAdmin(String admin, String password)
+    {
+        Login = admin;
+        Password = password;
+    }
+
+    public static void login1(String admin, String pass) {
+        admin1 = admin;
+        pass1 = pass;
+    }
+
+    public static void login2(String admin, String pass) {
+        admin2 = admin;
+        pass2 = pass;
+    }
+
+    public static void login3(String admin, String pass) {
+        admin3 = admin;
+        pass3 = pass;
+    }
+
+    public String getLogin() {
+        return Login;
+    }
+
+    public String getPassword() {
+        return Password;
+    }
+
+    public String getAdmin1() {
+        return admin1;
+    }
+
+    public String getAdmin2() {
+        return admin2;
+    }
+
+    public String getAdmin3() {
+        return admin3;
+    }
+
+    public String getPass1() {
+        return pass1;
+    }
+
+    public String getPass2() {
+        return pass2;
+    }
+
+    public String getPass3() {
+        return pass3;
+    }
+public static void main(String[] args) {
+        Admin admin = new Admin();
+        Admin.defaultAdmin("admin@gmail.com", "1234");
+        Admin.login1("huzaifa@gmail.com", "7096");
+        Admin.login2("maaz@gmail.com", "7091");
+        Admin.login3("ijlal@gmail.com", "7072");
+
+        try {
+            FileWriter w = new FileWriter("LoginInfo.txt");
+            w.write(admin.getLogin() + " " + admin.getPassword() + " " + "X" + " " + "Admin" + " " + "\n");
+            w.write(admin.getAdmin1() + " " + admin.getPass1() + " " + "A" + " " + "Huzaifa" + " " +"\n");
+            w.write(admin.getAdmin2() + " " + admin.getPass2() + " " + "B" + " " + "Maaz" + " " +"\n");
+            w.write(admin.getAdmin3() + " " + admin.getPass3() + " " + "C" + "Ijlal" + " " +"\n");
+            w.close();
+        } catch (IOException e) {
+            System.out.println("Error writing to file: " + e.getMessage());
+        }
+    }
+}
+====================================================================================================================
+
+Login Page:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+
+public class LoginPage extends JFrame {
+
+    private JPanel mainPanel;
+    private JLabel titleLabel, emailLabel, passwordLabel;
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JButton loginButton;
+
+    public LoginPage() {
+        initComponents();
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Page");
+        setBackground(Color.WHITE);
+        setLocationByPlatform(true);
+        setName("Login");
+        setResizable(false);
+
+        titleLabel = new JLabel();
+        emailLabel = new JLabel();
+        passwordLabel = new JLabel();
+        emailField = new JTextField();
+        passwordField = new JPasswordField();
+        loginButton = new JButton();
+
+        titleLabel.setBackground(Color.BLACK);
+        titleLabel.setFont(new Font("Lucida Calligraphy", Font.BOLD | Font.ITALIC, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setText("Parking Management System");
+        titleLabel.setAlignmentY(0.0F);
+
+        emailLabel.setFont(new Font("JetBrains Mono NL ExtraBold", Font.PLAIN, 12));
+        emailLabel.setText("Email");
+
+        passwordLabel.setFont(new Font("JetBrains Mono NL ExtraBold", Font.PLAIN, 12));
+        passwordLabel.setText("Password");
+
+        emailField.setBorder(BorderFactory.createEtchedBorder(Color.GRAY, Color.BLACK));
+        emailField.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+
+        passwordField.setBorder(BorderFactory.createEtchedBorder(Color.GRAY, Color.BLACK));
+
+        loginButton.setFont(new Font("JetBrains Mono NL ExtraBold", Font.BOLD, 12));
+        loginButton.setText("Login");
+        loginButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loginButton.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                loginButtonClicked(evt);
+            }
+        });
+
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(168, 168, 168)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(emailLabel)
+                                                        .addComponent(emailField)
+                                                        .addComponent(passwordLabel)
+                                                        .addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(273, 273, 273)
+                                                .addComponent(loginButton)))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(emailLabel)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(emailField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(passwordLabel)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(passwordField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(loginButton)
+                                .addContainerGap(118, Short.MAX_VALUE))
+        );
+
+        pack();
+    }
+
+    private void loginButtonClicked(MouseEvent evt) {
+
+        Admin admin = new Admin();
+        String username = emailField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
+
+        LocalDateTime now = LocalDateTime.now();
+        int hour = now.getHour();
+
+        String currentShift;
+        String defaultShift = "X";
+        if (hour >= 0 && hour < 8) {
+            currentShift = "A";
+        } else if (hour >= 8 && hour < 16) {
+            currentShift = "B";
+        } else {
+            currentShift = "C";
+        }
+
+        boolean success = false;
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("LoginInfo.txt"));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length == 4) {
+                    String fileUsername = parts[0];
+                    String filePassword = parts[1];
+                    String shift = parts[2];
+                    String currentAdmin = parts[3];
+
+                    if (username.equals(fileUsername) &&
+                            password.equals(filePassword) &&
+                            currentShift.equals(shift) || defaultShift.equals(shift)) {
+
+                        success = true;
+                        break;
+                    }
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+        if (success) {
+            new AdminPanel().setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this, "Invalid credentials or not your shift.");
+        }
+    }
+
+    public static void main(String[] args) {
+                new LoginPage().setVisible(true);
+    }
+}
+===================================================================================================================
+
+Admin Panel:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class AdminPanel extends JFrame {
+
+    private JLabel titleLabel;
+    private JButton enterVehicleButton, exitVehicleButton, searchButton;
+
+    public AdminPanel() {
+        initComponents();
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Admin Panel");
+        setName("Admin");
+        setResizable(false);
+
+        titleLabel = new JLabel();
+        enterVehicleButton = new JButton();
+        exitVehicleButton = new JButton();
+        searchButton = new JButton();
+
+        titleLabel.setBackground(Color.BLACK);
+        titleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setText("Admin Panel");
+        titleLabel.setAlignmentY(0.0F);
+
+        enterVehicleButton.setFont(new Font("JetBrains Mono NL ExtraBold", Font.BOLD, 20));
+        enterVehicleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        enterVehicleButton.setText("Enter Vehicle");
+        enterVehicleButton.addActionListener(this::enterVehicleButtonClicked);
+
+        exitVehicleButton.setFont(new Font("JetBrains Mono NL ExtraBold", Font.BOLD, 20));
+        exitVehicleButton.setText("Exit Vehicle");
+        exitVehicleButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        exitVehicleButton.addActionListener(this::exitVehicleButtonClicked);
+
+        searchButton.setFont(new Font("JetBrains Mono NL ExtraBold", Font.BOLD, 20));
+        searchButton.setText("Search");
+        searchButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        searchButton.addActionListener(this::searchButtonClicked);
+
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addComponent(titleLabel, GroupLayout.Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 234, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(exitVehicleButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(enterVehicleButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 250, GroupLayout.PREFERRED_SIZE))
+                                .addGap(216, 216, 216))
+        );
+
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91)
+                                .addComponent(enterVehicleButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(exitVehicleButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addGap(57, 57, 57)
+                                .addComponent(searchButton, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(80, Short.MAX_VALUE))
+        );
+
+        pack();
+    }
+
+    private void enterVehicleButtonClicked(ActionEvent evt) {
+        new Entry().setVisible(true);
+        this.dispose();
+    }
+
+    private void exitVehicleButtonClicked(ActionEvent evt) {
+        new Exit().setVisible(true);
+        this.dispose();
+    }
+
+    private void searchButtonClicked(ActionEvent evt) {
+        new Search().setVisible(true);
+        this.dispose();
+    }
+
+    public static void main(String[] args) {
+                new LoginPage().setVisible(true);
+    }
+}
+==================================================================================================================
+
+Entry:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Entry extends JFrame {
+    private JTextField driverNameField, licensePlateField, receiptNoField, slotNoField;
+
+    private JTextField colorField, hoursParkedField, entryTimeField;
+    private JLabel titleLabel;
+    private JComboBox<String> vehicleTypeCombo;
+    private JRadioButton handicapRadio;
+    private JScrollPane displayScrollPane;
+    private JTextPane displayPane;
+    private JButton enterButton, backButton;
+
+    public Entry() {
+        initComponents();
+        setCurrentTime();
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Entry Vehicle");
+        setName("Entry");
+        setResizable(false);
+        setSize(new Dimension(700, 500));
+
+        initializeFields();
+        initializeLabelsAndButtons();
+        setupLayout();
+    }
+
+    private void initializeFields() {
+
+        driverNameField = new JTextField("Driver Name");
+        licensePlateField = new JTextField("License Plate");
+        receiptNoField = new JTextField("Receipt No.");
+        slotNoField = new JTextField("Slot No.");
+        colorField = new JTextField("Color");
+        hoursParkedField = new JTextField("Hours Parked");
+        entryTimeField = new JTextField();
+        entryTimeField.setEditable(false);
+
+        addPlaceholderBehavior(driverNameField, "Driver Name");
+        addPlaceholderBehavior(licensePlateField, "License Plate");
+        addPlaceholderBehavior(receiptNoField, "Receipt No.");
+        addPlaceholderBehavior(slotNoField, "Slot No.");
+        addPlaceholderBehavior(colorField, "Color");
+        addPlaceholderBehavior(hoursParkedField, "Hours Parked");
+
+        vehicleTypeCombo = new JComboBox<>(new String[]{"Car", "Bike", "Jeep", "Wagon", "Truck"});
+        handicapRadio = new JRadioButton("Handicap");
+
+        displayPane = new JTextPane();
+        displayPane.setEditable(false);
+        displayScrollPane = new JScrollPane(displayPane);
+    }
+
+    private void initializeLabelsAndButtons() {
+        titleLabel = new JLabel();
+        titleLabel.setBackground(Color.BLACK);
+        titleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setText("Entry Panel");
+        titleLabel.setAlignmentY(0.0F);
+
+        enterButton = new JButton("Enter");
+        enterButton.addActionListener(this::enterButtonClicked);
+
+        backButton = new JButton("← Back");
+        backButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        backButton.addActionListener(this::backButtonClicked);
+    }
+
+    private void setupLayout() {
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(54, 54, 54)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                        .addComponent(driverNameField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(licensePlateField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(receiptNoField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(slotNoField, GroupLayout.PREFERRED_SIZE, 150, GroupLayout.PREFERRED_SIZE))
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(colorField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                        .addComponent(hoursParkedField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                        .addComponent(vehicleTypeCombo, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(entryTimeField))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(displayScrollPane, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(180, 180, 180)
+                                .addComponent(handicapRadio, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(enterButton)
+                                .addGap(105, 105, 105))
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                                .addContainerGap())
+        );
+
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                                .addGap(78, 78, 78)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(driverNameField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(colorField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(54, 54, 54)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(hoursParkedField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(licensePlateField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(57, 57, 57)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(receiptNoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(entryTimeField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                                .addGap(56, 56, 56)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(slotNoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(vehicleTypeCombo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(displayScrollPane, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                                .addComponent(handicapRadio)
+                                                .addGap(24, 24, 24))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(18, 18, 18)
+                                                .addComponent(enterButton)
+                                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+        );
+
+        pack();
+    }
+
+    private void setCurrentTime() {
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        entryTimeField.setText(now.format(formatter));
+    }
+
+    private void addPlaceholderBehavior(JTextField field, String placeholder) {
+        field.setForeground(Color.GRAY);
+
+        field.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (field.getText().equals(placeholder)) {
+                    field.setText("");
+                    field.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (field.getText().isEmpty()) {
+                    field.setText(placeholder);
+                    field.setForeground(Color.GRAY);
+                }
+            }
+        });
+    }
+
+    private boolean isPlaceholderText(JTextField field, String placeholder) {
+        return field.getText().equals(placeholder) || field.getText().trim().isEmpty();
+    }
+
+    private void resetFieldToPlaceholder(JTextField field, String placeholder) {
+        field.setText(placeholder);
+        field.setForeground(Color.GRAY);
+    }
+
+    private void backButtonClicked(ActionEvent evt) {
+        this.dispose();
+        new AdminPanel().setVisible(true);
+    }
+
+    private boolean isSlotAlreadyUsed(int slotNumber) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("CarInfo.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().startsWith("Slot No: " + slotNumber)) {
+                    return true;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Note: CarInfo.txt file not found or cannot be read. Assuming slot is available.");
+            return false;
+        }
+        return false;
+    }
+
+    private String checkSlotAvailability(int slotNumber) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("parking_slots.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.trim().split(" ");
+                if (parts.length >= 4 && parts[0].equals("Slot")) {
+                    int fileSlotId = Integer.parseInt(parts[1]);
+                    if (fileSlotId == slotNumber) {
+                        return parts[3];
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading parking_slots.txt file: " + e.getMessage());
+            JOptionPane.showMessageDialog(null,
+                    "Error: Cannot read parking slots file. Please ensure parking_slots.txt exists.",
+                    "File Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing slot number from file");
+        }
+        return "INVALID";
+    }
+
+    private String getSlotType(int slotNumber) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("parking_slots.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.trim().split(" ");
+                if (parts.length >= 4 && parts[0].equals("Slot")) {
+                    int fileSlotId = Integer.parseInt(parts[1]);
+                    if (fileSlotId == slotNumber) {
+                        return parts[2];
+                    }
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading slot file: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing slot number from file");
+        }
+        return "General";
+    }
+
+    private boolean updateSlotStatus(int slotNumber, boolean occupy) {
+        java.util.List<String> lines = new java.util.ArrayList<>();
+        boolean updated = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("parking_slots.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.trim().split(" ");
+                if (parts.length >= 4 && parts[0].equals("Slot")) {
+                    int fileSlotId = Integer.parseInt(parts[1]);
+                    if (fileSlotId == slotNumber) {
+                        String category = parts[2];
+                        String newStatus = occupy ? "Taken" : "Available";
+                        lines.add("Slot " + slotNumber + " " + category + " " + newStatus);
+                        updated = true;
+                    } else {
+                        lines.add(line);
+                    }
+                } else {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading parking_slots.txt file: " + e.getMessage());
+            JOptionPane.showMessageDialog(null,
+                    "Error reading parking slots file: " + e.getMessage(),
+                    "File Read Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+
+        if (updated) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter("parking_slots.txt"))) {
+                for (String line : lines) {
+                    writer.println(line);
+                }
+                System.out.println("Successfully updated slot " + slotNumber + " status to " + (occupy ? "Taken" : "Available"));
+                return true;
+            } catch (IOException e) {
+                System.err.println("Error writing to parking_slots.txt file: " + e.getMessage());
+                JOptionPane.showMessageDialog(null,
+                        "Error updating parking slots file: " + e.getMessage(),
+                        "File Write Error",
+                        JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            System.err.println("Slot " + slotNumber + " not found in parking_slots.txt for update");
+        }
+
+        return false;
+    }
+
+    private void enterButtonClicked(ActionEvent evt) {
+        try {
+            if (isPlaceholderText(driverNameField, "Driver Name") ||
+                    isPlaceholderText(licensePlateField, "License Plate") ||
+                    isPlaceholderText(receiptNoField, "Receipt No.") ||
+                    isPlaceholderText(slotNoField, "Slot No.") ||
+                    isPlaceholderText(colorField, "Color") ||
+                    isPlaceholderText(hoursParkedField, "Hours Parked")) {
+
+                JOptionPane.showMessageDialog(this, "Please fill in all fields!");
+                return;
+            }
+
+            String driverName = driverNameField.getText().trim();
+            String licensePlate = licensePlateField.getText().trim();
+            String receiptNo = receiptNoField.getText().trim();
+            int slotNo = Integer.parseInt(slotNoField.getText().trim());
+            String color = colorField.getText().trim();
+            float hoursParked = Float.parseFloat(hoursParkedField.getText().trim());
+            String vehicleType = (String) vehicleTypeCombo.getSelectedItem();
+            String entryTime = entryTimeField.getText();
+            String handicap = handicapRadio.isSelected() ? "Yes" : "No";
+
+            String slotStatus = checkSlotAvailability(slotNo);
+
+            if (slotStatus.equals("INVALID")) {
+                JOptionPane.showMessageDialog(this,
+                        "Invalid slot number! Slot " + slotNo + " does not exist.",
+                        "Slot Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if (slotStatus.equals("Taken")) {
+                JOptionPane.showMessageDialog(this,
+                        "Slot " + slotNo + " is already occupied! Please choose another slot.",
+                        "Slot Occupied",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (isSlotAlreadyUsed(slotNo)) {
+                JOptionPane.showMessageDialog(this,
+                        "Slot " + slotNo + " has already been used for vehicle entry!\n" +
+                                "Each slot can only be used once. Please choose a different slot.",
+                        "Duplicate Slot Entry",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String slotType = getSlotType(slotNo);
+            if (handicap.equals("Yes") && !slotType.equals("Handicap")) {
+                int response = JOptionPane.showConfirmDialog(this,
+                        "You selected handicap parking but slot " + slotNo + " is a regular slot.\n" +
+                                "Do you want to continue with this regular slot?",
+                        "Slot Type Mismatch",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE);
+
+                if (response != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+
+            if (handicap.equals("No") && slotType.equals("Handicap")) {
+                int response = JOptionPane.showConfirmDialog(this,
+                        "Slot " + slotNo + " is reserved for handicapped parking.\n" +
+                                "Do you want to continue parking in this handicapped slot?",
+                        "Handicapped Slot Warning",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.WARNING_MESSAGE);
+
+                if (response != JOptionPane.YES_OPTION) {
+                    return;
+                }
+            }
+
+            Vehicle vehicle = null;
+
+            switch (vehicleType.toLowerCase()) {
+                case "car":
+                    vehicle = new Car(driverName, licensePlate, receiptNo, slotNo, color, hoursParked);
+                    break;
+                case "bike":
+                    vehicle = new Bike(driverName, licensePlate, receiptNo, slotNo, color, hoursParked);
+                    break;
+                case "jeep":
+                    vehicle = new Jeep(driverName, licensePlate, receiptNo, slotNo, color, hoursParked);
+                    break;
+                case "wagon":
+                    vehicle = new Wagon(driverName, licensePlate, receiptNo, slotNo, color, hoursParked);
+                    break;
+                case "truck":
+                    vehicle = new Truck(driverName, licensePlate, receiptNo, slotNo, color, hoursParked);
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(this, "Unknown vehicle type selected!");
+                    return;
+            }
+
+            LocalDateTime now = LocalDateTime.now();
+            int hour = now.getHour();
+            String currentShift;
+            if (hour >= 0 && hour < 8) {
+                currentShift = "A";
+            } else if (hour >= 8 && hour < 16) {
+                currentShift = "B";
+            } else {
+                currentShift = "C";
+            }
+
+            String currentAdminName = "UNKNOWN";
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader("LoginInfo.txt"));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(" ");
+                    if (parts.length == 4) {
+                        switch (currentShift) {
+                            case "A": {currentAdminName = "Huzaifa"; break;}
+                            case "B": {currentAdminName = "Maaz"; break;}
+                            case "C": {currentAdminName = "Ijlal"; break;}
+                            default: {currentAdminName = "Admin";}
+                        }
+                    }
+                }
+                reader.close();
+            } catch (IOException e) {
+                System.out.println("Error reading file: " + e.getMessage());
+            }
+
+            double baseRate = getBaseRateForVehicle(vehicleType);
+            double totalPayment = baseRate * hoursParked;
+
+            if (handicap.equals("Yes")) {
+                totalPayment = 20 * hoursParked;
+            }
+
+            StringBuilder info = new StringBuilder();
+            info.append("=== VEHICLE ENTRY INFORMATION ===\n\n");
+            info.append("Driver Name: ").append(driverName).append("\n");
+            info.append("License Plate: ").append(licensePlate).append("\n");
+            info.append("Receipt No: ").append(receiptNo).append("\n");
+            info.append("Slot No: ").append(slotNo).append(" (").append(slotType).append(")\n");
+            info.append("Color: ").append(color).append("\n");
+            info.append("Hours Parked: ").append(hoursParked).append("\n");
+            info.append("Vehicle Type: ").append(vehicle.Type()).append("\n");
+            info.append("Entry Time: ").append(entryTime).append("\n");
+            info.append("Handicap: ").append(handicap).append("\n");
+            info.append("Current Admin: ").append(currentAdminName).append("\n");
+            info.append("=====================================\n");
+            info.append("PAYMENT CALCULATION:\n");
+            info.append("Base Rate: Rs. ").append(String.format("%.2f", baseRate)).append(" per hour\n");
+            info.append("Hours: ").append(hoursParked).append("\n");
+            if (handicap.equals("Yes")) {
+                info.append("Handicap Rate Applied: Rs. 20 per hour\n");
+            }
+            info.append("Total Payment: Rs. ").append(String.format("%.2f", totalPayment)).append("\n");
+            info.append("=====================================\n");
+
+            displayPane.setText(info.toString());
+
+            try {
+                boolean slotUpdated = updateSlotStatus(slotNo, true);
+
+                if (!slotUpdated) {
+                    JOptionPane.showMessageDialog(this,
+                            "Error: Could not update slot status. Entry cancelled.",
+                            "Slot Update Error",
+                            JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                FileWriter writer = new FileWriter("CarInfo.txt", true);
+                writer.write(info.toString());
+                writer.write("\n");
+                writer.close();
+
+                JOptionPane.showMessageDialog(this,
+                        "Vehicle entry recorded successfully!\nSlot " + slotNo + " is now occupied.\nTotal Payment: Rs. " + String.format("%.2f", totalPayment));
+
+                clearFields();
+
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error saving to file: " + e.getMessage());
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter valid numbers for Slot No and Hours Parked!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "An error occurred: " + e.getMessage());
+        }
+    }
+
+    private double getBaseRateForVehicle(String vehicleType) {
+        switch (vehicleType.toLowerCase()) {
+            case "car":
+                return 70.0;
+            case "bike":
+                return 50.0;
+            case "jeep":
+                return 100.0;
+            case "wagon":
+                return 150.0;
+            case "truck":
+                return 250.0;
+            default:
+                return 70.0;
+        }
+    }
+
+    private void clearFields() {
+        resetFieldToPlaceholder(driverNameField, "Driver Name");
+        resetFieldToPlaceholder(licensePlateField, "License Plate");
+        resetFieldToPlaceholder(receiptNoField, "Receipt No.");
+        resetFieldToPlaceholder(slotNoField, "Slot No.");
+        resetFieldToPlaceholder(colorField, "Color");
+        resetFieldToPlaceholder(hoursParkedField, "Hours Parked");
+
+        handicapRadio.setSelected(false);
+        vehicleTypeCombo.setSelectedIndex(0);
+        setCurrentTime();
+    }
+
+    public static void main(String[] args) {
+        new LoginPage().setVisible(true);
+    }
+
+}
+============================================================================================================
+
+Vehicle Entry:
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+abstract class Vehicle {
+    private String DriverName;
+    private String LicencePlate;
+    private String ReceiptNo;
+    private int SlotNo;
+    private String Color;
+    private float HourParked;
+    private String CarType;
+
+    Vehicle(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked)
+    {
+        this.DriverName = DriverName;
+        this.LicencePlate = LicencePlate;
+        this.ReceiptNo = ReceiptNo;
+        this.SlotNo = SlotNo;
+        this.Color = Color;
+        this.HourParked = HourParked;
+    }
+
+    public abstract String Type();
+    public String getDriverName()
+    {
+        return DriverName;
+    }
+    public String getLicencePlate()
+    {
+        return LicencePlate;
+    }
+    public String getReceiptNo()
+    {
+        return ReceiptNo;
+    }
+    public int getSlotNo()
+    {
+        return SlotNo;
+    }
+    public String getColor()
+    {
+        return Color;
+    }
+    public float getHourParked()
+    {
+        return HourParked;
+    }
+}
+
+interface Time{
+    public String Entry();
+    public String Exit();
+}
+
+class Car extends Vehicle implements Time{
+    Car(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked) {
+        super(DriverName, LicencePlate, ReceiptNo, SlotNo, Color, HourParked);
+    }
+
+    @Override
+    public String Type() {
+        return "Car";
+    }
+
+    @Override
+    public String Entry() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public String Exit() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+}
+class Bike extends Vehicle implements Time{
+    Bike(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked) {
+        super(DriverName, LicencePlate, ReceiptNo, SlotNo, Color, HourParked);
+    }
+
+    @Override
+    public String Type() {
+        return "Bike";
+    }
+
+    @Override
+    public String Entry() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public String Exit() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+}
+class Jeep extends Vehicle implements Time{
+    Jeep(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked) {
+        super(DriverName, LicencePlate, ReceiptNo, SlotNo, Color, HourParked);
+    }
+
+    @Override
+    public String Type() {
+        return "Jeep";
+    }
+
+    @Override
+    public String Entry() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public String Exit() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+}
+class Wagon extends Vehicle implements Time{
+    Wagon(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked) {
+        super(DriverName, LicencePlate, ReceiptNo, SlotNo, Color, HourParked);
+    }
+
+    @Override
+    public String Type() {
+        return "Wagon";
+    }
+
+    @Override
+    public String Entry() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public String Exit() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+}
+class Truck extends Vehicle implements Time{
+    Truck(String DriverName, String LicencePlate, String ReceiptNo, int SlotNo, String Color, float HourParked) {
+        super(DriverName, LicencePlate, ReceiptNo, SlotNo, Color, HourParked);
+    }
+
+    @Override
+    public String Type() {
+        return "Truck";
+    }
+
+    @Override
+    public String Entry() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @Override
+    public String Exit() {
+        LocalDateTime now = LocalDateTime.now();
+        return now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    }
+}
+public class VehicleEntry{
+    public static void main(String[] args){
+        String DriverName = null, LicencePlate = null, ReceiptNo = null, Color = null;
+        int SlotNo = 0;
+        float HourParked = 0;
+
+        try{
+            File file = new File("CarInfo.txt");
+            FileReader reader = new FileReader(file);
+            FileWriter writer = new FileWriter(file);
+
+            writer.write("Driver Name: " + DriverName + "\nLicence Plate: " + LicencePlate + "Receipt No: " + ReceiptNo + "\nSlot No :" + SlotNo + "Color: " + Color + "\nHour Parked: " + HourParked);
+            writer.close();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+    }
+}
+=======================================================================================================
+
+Slot Management:
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+class Slot {
+    private int slotId;
+    private boolean isOccupied;
+    private String category;
+
+    public Slot(int slotId, String category) {
+        this.slotId = slotId;
+        this.category = category;
+        this.isOccupied = false;
+    }
+
+    public boolean parkVehicle() {
+        if (isOccupied) {
+            return false;
+        }
+
+        this.isOccupied = true;
+        return true;
+    }
+
+    public boolean removeVehicle() {
+        if (!isOccupied) {
+            return false;
+        }
+
+        this.isOccupied = false;
+        return true;
+    }
+
+    public String getSlotStatus() {
+        if (isOccupied) {
+            return "OCCUPIED";
+        } else if (category.equals("HANDICAPPED")) {
+            return "HANDICAPPED_AVAILABLE";
+        } else {
+            return "AVAILABLE";
+        }
+    }
+
+    public String getStatusForFile() {
+        String slotType = category.equals("HANDICAPPED") ? "Handicap" : "General";
+        String status = isOccupied ? "Taken" : "Available";
+        return "Slot " + slotId + " " + slotType + " " + status;
+    }
+
+    public int getSlotId() { return slotId; }
+    public boolean isOccupied() { return isOccupied; }
+    public String getCategory() { return category; }
+
+    @Override
+    public String toString() {
+        String categoryStr = category.equals("HANDICAPPED") ? " [HANDICAPPED]" : "";
+        String status = isOccupied ? "OCCUPIED" : "AVAILABLE";
+        return "Slot " + slotId + categoryStr + " [" + status + "]";
+    }
+}
+
+class SlotManager {
+    private ArrayList<Slot> slots;
+    private static final int TOTAL_SLOTS = 100;
+    private static final int HANDICAPPED_SLOTS = 10;
+    private static final String DATA_FILE = "parking_slots.txt";
+
+    public SlotManager() {
+        slots = new ArrayList<>(TOTAL_SLOTS);
+        initializeSlots();
+        loadExistingData();
+    }
+
+    private void initializeSlots() {
+        for (int i = 1; i <= HANDICAPPED_SLOTS; i++) {
+            slots.add(new Slot(i, "HANDICAPPED"));
+        }
+        for (int i = HANDICAPPED_SLOTS + 1; i <= TOTAL_SLOTS; i++) {
+            slots.add(new Slot(i, "REGULAR"));
+        }
+    }
+
+    private void loadExistingData() {
+        File dataFile = new File(DATA_FILE);
+        if (!dataFile.exists()) {
+            saveToFile();
+            return;
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(dataFile))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                processDataLine(line.trim());
+            }
+
+        } catch (IOException e) {
+        }
+    }
+
+    private boolean processDataLine(String line) {
+        try {
+            String[] parts = line.split(" ");
+            if (parts.length >= 4 && parts[0].equals("Slot")) {
+                int slotId = Integer.parseInt(parts[1]);
+                String status = parts[3];
+
+                if (slotId >= 1 && slotId <= TOTAL_SLOTS && status.equals("Taken")) {
+                    Slot slot = slots.get(slotId - 1);
+                    return slot.parkVehicle();
+                }
+            }
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    private void saveToFile() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(DATA_FILE))) {
+            for (Slot slot : slots) {
+                writer.println(slot.getStatusForFile());
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    public List<Integer> findAvailableSlots() {
+        List<Integer> availableSlots = new ArrayList<>();
+        for (Slot slot : slots) {
+            if (slot.getSlotStatus().equals("AVAILABLE")) {
+                availableSlots.add(slot.getSlotId());
+            }
+        }
+        return availableSlots;
+    }
+
+    public List<Integer> findAvailableHandicappedSlots() {
+        List<Integer> availableHandicappedSlots = new ArrayList<>();
+        for (Slot slot : slots) {
+            if (slot.getSlotStatus().equals("HANDICAPPED_AVAILABLE")) {
+                availableHandicappedSlots.add(slot.getSlotId());
+            }
+        }
+        return availableHandicappedSlots;
+    }
+
+    public List<Integer> getOccupiedHandicappedSlots() {
+        List<Integer> occupiedHandicappedSlots = new ArrayList<>();
+        for (Slot slot : slots) {
+            if (slot.getCategory().equals("HANDICAPPED") && slot.getSlotStatus().equals("OCCUPIED")) {
+                occupiedHandicappedSlots.add(slot.getSlotId());
+            }
+        }
+        return occupiedHandicappedSlots;
+    }
+
+    public boolean parkVehicle(int slotNumber) {
+        if (slotNumber < 1 || slotNumber > TOTAL_SLOTS) {
+            return false;
+        }
+
+        Slot slot = slots.get(slotNumber - 1);
+        if (slot.getSlotStatus().equals("OCCUPIED")) {
+            return false;
+        }
+
+        boolean success = slot.parkVehicle();
+        if (success) {
+            saveToFile();
+        }
+        return success;
+    }
+
+    public int parkVehicleAuto(boolean needHandicapped) {
+        List<Integer> availableSlots = needHandicapped ? findAvailableHandicappedSlots() : findAvailableSlots();
+        if (availableSlots.isEmpty()) {
+            return -1;
+        }
+
+        int slotNumber = availableSlots.get(0);
+        boolean success = parkVehicle(slotNumber);
+        return success ? slotNumber : -1;
+    }
+
+    public boolean removeVehicle(int slotNumber) {
+        if (slotNumber < 1 || slotNumber > TOTAL_SLOTS) {
+            return false;
+        }
+
+        Slot slot = slots.get(slotNumber - 1);
+        if (!slot.getSlotStatus().equals("OCCUPIED")) {
+            return false;
+        }
+
+        boolean success = slot.removeVehicle();
+        if (success) {
+            saveToFile();
+        }
+        return success;
+    }
+
+    public void displayParkingStatus() {
+        int totalOccupied = 0, regularOccupied = 0, handicappedOccupied = 0;
+        int regularAvailable = 0, handicappedAvailable = 0;
+
+        for (Slot slot : slots) {
+            String status = slot.getSlotStatus();
+            if (status.equals("OCCUPIED")) {
+                totalOccupied++;
+                if (slot.getCategory().equals("HANDICAPPED")) {
+                    handicappedOccupied++;
+                } else {
+                    regularOccupied++;
+                }
+            } else if (status.equals("AVAILABLE")) {
+                regularAvailable++;
+            } else if (status.equals("HANDICAPPED_AVAILABLE")) {
+                handicappedAvailable++;
+            }
+        }
+    }
+
+    public void displayFileContents() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(DATA_FILE))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+            }
+        } catch (IOException e) {
+        }
+    }
+
+    public Slot getSlot(int slotNumber) {
+        if (slotNumber >= 1 && slotNumber <= TOTAL_SLOTS) {
+            return slots.get(slotNumber - 1);
+        }
+        return null;
+    }
+
+    public int getTotalSlots() {
+        return TOTAL_SLOTS;
+    }
+
+    public static int getHandicappedSlotCount() {
+        return HANDICAPPED_SLOTS;
+    }
+}
+
+public class SlotManagement {
+    public static void main(String[] args) {
+        SlotManager manager = new SlotManager();
+
+        manager.parkVehicle(1);
+        manager.parkVehicle(15);
+        manager.parkVehicle(25);
+        manager.parkVehicleAuto(true);
+        manager.parkVehicleAuto(false);
+
+        manager.displayParkingStatus();
+
+        manager.removeVehicle(15);
+
+        manager.displayFileContents();
+
+        manager.displayParkingStatus();
+    }
+}
+=================================================================================================
+
+Payment:
+import java.io.*;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
+
+interface Penalty {
+    double getCarPenalty(double amount);
+    double getBikePenalty(double amount);
+    double getJeepPenalty(double amount);
+    double getWagonPenalty(double amount);
+    double getTruckPenalty(double amount);
+    double getHandicapPenalty(double amount);
+}
+
+class PaymentMethod implements Penalty {
+    private double baseAmount;
+
+    public PaymentMethod() {
+        this.baseAmount = 0;
+    }
+
+    public PaymentMethod(double baseAmount) {
+        this.baseAmount = baseAmount;
+    }
+
+    public double getBaseAmount() {
+        return baseAmount;
+    }
+
+    @Override
+    public double getCarPenalty(double amount) {
+        return amount * 0.5;
+    }
+
+    @Override
+    public double getBikePenalty(double amount) {
+        return amount * 0.3;
+    }
+
+    @Override
+    public double getJeepPenalty(double amount) {
+        return amount * 0.6;
+    }
+
+    @Override
+    public double getWagonPenalty(double amount) {
+        return amount * 2.0;
+    }
+
+    @Override
+    public double getTruckPenalty(double amount) {
+        return amount * 1.5;
+    }
+
+    @Override
+    public double getHandicapPenalty(double amount) {
+        return 100;
+    }
+}
+
+class PaymentCalculator {
+    private Map<String, Double> baseRates;
+    private Map<String, Double> penaltyRates;
+    private PaymentMethod paymentMethod;
+
+    public PaymentCalculator() {
+        this.baseRates = new HashMap<>();
+        this.penaltyRates = new HashMap<>();
+        this.paymentMethod = new PaymentMethod();
+        loadRates();
+    }
+
+    private void loadRates() {
+        try (BufferedReader reader = new BufferedReader(new FileReader("Payment.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length >= 2) {
+                    String vehicleType = parts[0].toLowerCase();
+                    double rate = Double.parseDouble(parts[1]);
+                    baseRates.put(vehicleType, rate);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading payment rates: " + e.getMessage());
+            setDefaultRates();
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing payment rates: " + e.getMessage());
+            setDefaultRates();
+        }
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("Penalty.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(" ");
+                if (parts.length >= 2) {
+                    String vehicleType = parts[0].toLowerCase();
+                    double penalty = Double.parseDouble(parts[1]);
+                    penaltyRates.put(vehicleType, penalty);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading penalty rates: " + e.getMessage());
+            setDefaultPenalties();
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing penalty rates: " + e.getMessage());
+            setDefaultPenalties();
+        }
+    }
+
+    private void setDefaultRates() {
+        baseRates.put("car", 70.0);
+        baseRates.put("bike", 50.0);
+        baseRates.put("jeep", 100.0);
+        baseRates.put("wagon", 150.0);
+        baseRates.put("truck", 250.0);
+        baseRates.put("handicap", 20.0);
+    }
+
+    private void setDefaultPenalties() {
+        penaltyRates.put("car", 35.0);
+        penaltyRates.put("bike", 15.0);
+        penaltyRates.put("jeep", 60.0);
+        penaltyRates.put("wagon", 300.0);
+        penaltyRates.put("truck", 375.0);
+        penaltyRates.put("handicap", 100.0);
+    }
+
+    public double calculatePayment(String vehicleType, double hoursParked) {
+        return calculatePayment(vehicleType, hoursParked, false);
+    }
+
+    public double calculatePayment(String vehicleType, double hoursParked, boolean applyPenalty) {
+        String type = vehicleType.toLowerCase();
+        double baseRate = baseRates.getOrDefault(type, 50.0); // Default rate if type not found
+
+        double actualHours = Math.max(hoursParked, 1.0);
+        double basePayment = baseRate * Math.ceil(actualHours); // Round up to next hour
+
+        if (applyPenalty) {
+            double penalty = penaltyRates.getOrDefault(type, basePayment * 0.5);
+            return basePayment + penalty;
+        }
+
+        return basePayment;
+    }
+
+    public double calculateHoursParked(String entryTime) {
+        return calculateHoursParked(entryTime, LocalDateTime.now());
+    }
+
+    public double calculateHoursParked(String entryTime, LocalDateTime exitTime) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime entry = LocalDateTime.parse(entryTime, formatter);
+
+            long minutes = ChronoUnit.MINUTES.between(entry, exitTime);
+            return Math.max(minutes / 60.0, 0.0);
+
+        } catch (Exception e) {
+            System.err.println("Error calculating hours parked: " + e.getMessage());
+            return 1.0;
+        }
+    }
+
+    public double getBaseRate(String vehicleType) {
+        return baseRates.getOrDefault(vehicleType.toLowerCase(), 50.0);
+    }
+
+    public double getPenaltyRate(String vehicleType) {
+        return penaltyRates.getOrDefault(vehicleType.toLowerCase(), 25.0);
+    }
+}
+
+public class Payment {
+    public static void main(String[] args) {
+        PaymentMethod car = new PaymentMethod(70);
+        PaymentMethod bike = new PaymentMethod(50);
+        PaymentMethod jeep = new PaymentMethod(100);
+        PaymentMethod wagon = new PaymentMethod(150);
+        PaymentMethod truck = new PaymentMethod(250);
+        PaymentMethod handicap = new PaymentMethod(20);
+        PaymentMethod penaltyCalculator = new PaymentMethod();
+
+        createPaymentRatesFile(car, bike, jeep, wagon, truck, handicap);
+
+        createPenaltyRatesFile(penaltyCalculator, car, bike, jeep, wagon, truck, handicap);
+    }
+
+    private static void createPaymentRatesFile(PaymentMethod car, PaymentMethod bike,
+                                               PaymentMethod jeep, PaymentMethod wagon,
+                                               PaymentMethod truck, PaymentMethod handicap) {
+        try (FileWriter writer = new FileWriter("Payment.txt")) {
+            writer.write("Car " + car.getBaseAmount() + "\n");
+            writer.write("Bike " + bike.getBaseAmount() + "\n");
+            writer.write("Jeep " + jeep.getBaseAmount() + "\n");
+            writer.write("Wagon " + wagon.getBaseAmount() + "\n");
+            writer.write("Truck " + truck.getBaseAmount() + "\n");
+            writer.write("Handicap " + handicap.getBaseAmount() + "\n");
+        } catch (IOException e) {
+            System.err.println("Error creating payment rates file: " + e.getMessage());
+        }
+    }
+
+    private static void createPenaltyRatesFile(PaymentMethod penaltyCalculator,
+                                               PaymentMethod car, PaymentMethod bike,
+                                               PaymentMethod jeep, PaymentMethod wagon,
+                                               PaymentMethod truck, PaymentMethod handicap) {
+        try (FileWriter writer = new FileWriter("Penalty.txt")) {
+            writer.write("Car " + penaltyCalculator.getCarPenalty(car.getBaseAmount()) + "\n");
+            writer.write("Bike " + penaltyCalculator.getBikePenalty(bike.getBaseAmount()) + "\n");
+            writer.write("Jeep " + penaltyCalculator.getJeepPenalty(jeep.getBaseAmount()) + "\n");
+            writer.write("Wagon " + penaltyCalculator.getWagonPenalty(wagon.getBaseAmount()) + "\n");
+            writer.write("Truck " + penaltyCalculator.getTruckPenalty(truck.getBaseAmount()) + "\n");
+            writer.write("Handicap " + penaltyCalculator.getHandicapPenalty(handicap.getBaseAmount()) + "\n");
+        } catch (IOException e) {
+            System.err.println("Error creating penalty rates file: " + e.getMessage());
+        }
+    }
+
+    private static void testPaymentCalculator() {
+        PaymentCalculator calculator = new PaymentCalculator();
+
+        // Test different scenarios
+        String[] vehicleTypes = {"Car", "Bike", "Jeep", "Wagon", "Truck", "Handicap"};
+        double[] hours = {1.5, 2.0, 3.5, 5.0, 0.5};
+
+        for (String vehicle : vehicleTypes) {
+            for (double hour : hours) {
+                double payment = calculator.calculatePayment(vehicle, hour);
+                double penaltyPayment = calculator.calculatePayment(vehicle, hour, true);
+            }
+        }
+    }
+
+    public static double calculateVehiclePayment(String vehicleType, String entryTime) {
+        PaymentCalculator calculator = new PaymentCalculator();
+        double hoursParked = calculator.calculateHoursParked(entryTime);
+        return calculator.calculatePayment(vehicleType, hoursParked);
+    }
+
+    public static double calculateVehiclePayment(String vehicleType, String entryTime,
+                                                 LocalDateTime exitTime) {
+        PaymentCalculator calculator = new PaymentCalculator();
+        double hoursParked = calculator.calculateHoursParked(entryTime, exitTime);
+        return calculator.calculatePayment(vehicleType, hoursParked);
+    }
+
+    public static double getHoursParked(String entryTime) {
+        PaymentCalculator calculator = new PaymentCalculator();
+        return calculator.calculateHoursParked(entryTime);
+    }
+}
+=================================================================================================================
+
+Exit:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+public class Exit extends JFrame {
+
+    private JLabel titleLabel;
+    private JTextField receiptNoField, paymentField;
+    private JScrollPane displayScrollPane;
+    private JTextPane displayPane;
+    private JButton checkButton, updateButton, backButton;
+    private JCheckBox paidCheckBox;
+
+    public Exit() {
+        initComponents();
+        setupPlaceholders();
+    }
+
+    private void initComponents() {
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Exit Vehicle");
+        setName("Exit");
+        setResizable(false);
+
+        initializeFields();
+        initializeLabelsAndButtons();
+        setupLayout();
+    }
+
+    private void initializeFields() {
+        receiptNoField = new JTextField();
+        paymentField = new JTextField();
+
+        displayPane = new JTextPane();
+        displayPane.setEditable(false);
+        displayScrollPane = new JScrollPane(displayPane);
+
+        paidCheckBox = new JCheckBox("Paid");
+    }
+
+    private void initializeLabelsAndButtons() {
+        titleLabel = new JLabel();
+        titleLabel.setBackground(Color.BLACK);
+        titleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setText("Exit Panel");
+        titleLabel.setAlignmentY(0.0F);
+
+        checkButton = new JButton("Check");
+        checkButton.addActionListener(this::checkButtonClicked);
+
+        updateButton = new JButton("Update");
+        updateButton.addActionListener(this::updateButtonClicked);
+
+        backButton = new JButton("← Back");
+        backButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        backButton.addActionListener(this::backButtonClicked);
+    }
+
+    private void setupLayout() {
+        GroupLayout layout = new GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                                .addContainerGap())
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(79, 79, 79)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(receiptNoField, GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
+                                                        .addComponent(paymentField))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(paidCheckBox))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(107, 107, 107)
+                                                .addComponent(checkButton)))
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(displayScrollPane, GroupLayout.PREFERRED_SIZE, 244, GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31))
+                        .addGroup(GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(updateButton)
+                                .addGap(110, 110, 110))
+        );
+
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(65, 65, 65)
+                                                .addComponent(displayScrollPane, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(106, 106, 106)
+                                                .addComponent(receiptNoField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                                .addGap(50, 50, 50)
+                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                                        .addComponent(paymentField)
+                                                        .addComponent(paidCheckBox))
+                                                .addGap(18, 18, 18)
+                                                .addComponent(checkButton)))
+                                .addGap(18, 18, 18)
+                                .addComponent(updateButton)
+                                .addContainerGap(38, Short.MAX_VALUE))
+        );
+
+        pack();
+    }
+
+    private void setupPlaceholders() {
+        setupPlaceholder(receiptNoField, "Enter Receipt Number");
+
+        setupPlaceholder(paymentField, "Enter Payment Amount");
+    }
+
+    private void setupPlaceholder(JTextField textField, String placeholder) {
+        textField.setText(placeholder);
+        textField.setForeground(Color.GRAY);
+
+        textField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                    textField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (textField.getText().isEmpty()) {
+                    textField.setForeground(Color.GRAY);
+                    textField.setText(placeholder);
+                }
+            }
+        });
+    }
+
+    private void backButtonClicked(ActionEvent evt) {
+        this.dispose();
+        new AdminPanel().setVisible(true);
+    }
+
+    private String currentDriverName = "";
+    private String currentLicensePlate = "";
+    private int currentSlotNo = 0;
+    private String currentVehicleType = "";
+    private String currentEntryTime = "";
+    private double currentPayment = 0.0;
+    private float currentHoursParked = 0.0f;
+
+    private void checkButtonClicked(ActionEvent evt) {
+        String receiptNo = receiptNoField.getText().trim();
+        if (receiptNo.isEmpty() || receiptNo.equals("Enter Receipt Number")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid receipt number!");
+            return;
+        }
+
+        if (isVehicleAlreadyExited(receiptNo)) {
+            displayPane.setText("VEHICLE ALREADY EXITED\n\n" +
+                    "Receipt No: " + receiptNo + "\n" +
+                    "Status: This vehicle has already been processed and exited.\n" +
+                    "=====================================");
+            JOptionPane.showMessageDialog(this, "This vehicle has already exited the parking system!");
+            return;
+        }
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("CarInfo.txt"));
+            String line;
+            StringBuilder vehicleInfo = new StringBuilder();
+            boolean found = false;
+            boolean inVehicleBlock = false;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("=== VEHICLE ENTRY INFORMATION ===")) {
+                    vehicleInfo = new StringBuilder();
+                    inVehicleBlock = true;
+                    vehicleInfo.append(line).append("\n");
+                    continue;
+                }
+
+                if (inVehicleBlock) {
+                    vehicleInfo.append(line).append("\n");
+
+                    if (line.contains("Receipt No: " + receiptNo)) {
+                        found = true;
+                    }
+
+                    if (line.startsWith("Driver Name: ")) {
+                        currentDriverName = line.substring("Driver Name: ".length()).trim();
+                    }
+                    if (line.startsWith("License Plate: ")) {
+                        currentLicensePlate = line.substring("License Plate: ".length()).trim();
+                    }
+                    if (line.startsWith("Slot No: ")) {
+                        String slotInfo = line.substring("Slot No: ".length()).trim();
+                        String[] parts = slotInfo.split(" ");
+                        currentSlotNo = Integer.parseInt(parts[0]);
+                    }
+                    if (line.startsWith("Vehicle Type: ")) {
+                        currentVehicleType = line.substring("Vehicle Type: ".length()).trim();
+                    }
+                    if (line.startsWith("Entry Time: ")) {
+                        currentEntryTime = line.substring("Entry Time: ".length()).trim();
+                    }
+
+                    if (line.contains("=====================================") && vehicleInfo.length() > 50) {
+                        if (found) {
+                            calculatePaymentForVehicle();
+
+                            StringBuilder displayInfo = new StringBuilder();
+                            displayInfo.append("=== VEHICLE EXIT INFORMATION ===\n\n");
+                            displayInfo.append("Receipt No: ").append(receiptNo).append("\n");
+                            displayInfo.append("Driver Name: ").append(currentDriverName).append("\n");
+                            displayInfo.append("License Plate: ").append(currentLicensePlate).append("\n");
+                            displayInfo.append("Slot No: ").append(currentSlotNo).append("\n");
+                            displayInfo.append("Vehicle Type: ").append(currentVehicleType).append("\n");
+                            displayInfo.append("Entry Time: ").append(currentEntryTime).append("\n");
+                            displayInfo.append("Hours Parked: ").append(String.format("%.2f", currentHoursParked)).append("\n");
+                            displayInfo.append("Payment Due: Rs. ").append(String.format("%.2f", currentPayment)).append("\n");
+                            displayInfo.append("Status: Ready for Exit\n");
+                            displayInfo.append("=====================================\n");
+
+                            displayPane.setText(displayInfo.toString());
+
+                            paymentField.setText(String.format("%.2f", currentPayment));
+                            paymentField.setForeground(Color.BLACK);
+
+                            reader.close();
+                            return;
+                        }
+                        inVehicleBlock = false;
+                        found = false;
+                    }
+                }
+            }
+            reader.close();
+
+            displayPane.setText("Receipt number not found!\nPlease check the receipt number and try again.");
+            JOptionPane.showMessageDialog(this, "Receipt number '" + receiptNo + "' not found in records!");
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading vehicle information: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Error parsing vehicle data: " + e.getMessage());
+        }
+    }
+
+    private void calculatePaymentForVehicle() {
+        try {
+
+            currentHoursParked = (float) Payment.getHoursParked(currentEntryTime);
+
+            currentPayment = Payment.calculateVehiclePayment(currentVehicleType, currentEntryTime);
+
+            System.out.println("Payment calculation:");
+            System.out.println("Vehicle Type: " + currentVehicleType);
+            System.out.println("Entry Time: " + currentEntryTime);
+            System.out.println("Hours Parked: " + currentHoursParked);
+            System.out.println("Calculated Payment: " + currentPayment);
+
+        } catch (Exception e) {
+            System.err.println("Error calculating payment: " + e.getMessage());
+            e.printStackTrace();
+
+            PaymentCalculator calculator = new PaymentCalculator();
+            currentHoursParked = (float) calculator.calculateHoursParked(currentEntryTime);
+            currentPayment = calculator.calculatePayment(currentVehicleType, currentHoursParked);
+        }
+    }
+
+    private void updateButtonClicked(ActionEvent evt) {
+        String receiptNo = receiptNoField.getText().trim();
+        if (receiptNo.isEmpty() || receiptNo.equals("Enter Receipt Number")) {
+            JOptionPane.showMessageDialog(this, "Please check vehicle details first!");
+            return;
+        }
+
+        if (currentSlotNo == 0) {
+            JOptionPane.showMessageDialog(this, "Please check vehicle details first!");
+            return;
+        }
+
+        String paymentText = paymentField.getText().trim();
+        if (paymentText.isEmpty() || paymentText.equals("Enter Payment Amount")) {
+            JOptionPane.showMessageDialog(this, "Please enter payment amount!");
+            return;
+        }
+
+        double enteredPayment;
+        try {
+            enteredPayment = Double.parseDouble(paymentText);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid payment amount!");
+            return;
+        }
+
+        if (enteredPayment < 0) {
+            JOptionPane.showMessageDialog(this, "Payment amount cannot be negative!");
+            return;
+        }
+
+        if (enteredPayment < currentPayment) {
+            JOptionPane.showMessageDialog(this,
+                    "Insufficient payment!\n" +
+                            "Required: Rs. " + String.format("%.2f", currentPayment) + "\n" +
+                            "Entered: Rs. " + String.format("%.2f", enteredPayment) + "\n" +
+                            "Please pay the full amount.");
+            return;
+        } else if (enteredPayment > currentPayment) {
+            double change = enteredPayment - currentPayment;
+            int result = JOptionPane.showConfirmDialog(this,
+                    "Excess payment received!\n" +
+                            "Required: Rs. " + String.format("%.2f", currentPayment) + "\n" +
+                            "Received: Rs. " + String.format("%.2f", enteredPayment) + "\n" +
+                            "Change to return: Rs. " + String.format("%.2f", change) + "\n\n" +
+                            "Proceed with exit?",
+                    "Excess Payment", JOptionPane.YES_NO_OPTION);
+
+            if (result != JOptionPane.YES_OPTION) {
+                return;
+            }
+        }
+
+        if (!paidCheckBox.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please confirm payment before updating!");
+            return;
+        }
+
+        try {
+            boolean slotUpdated = updateSlotStatus(currentSlotNo, false); // false means make available
+
+            if (!slotUpdated) {
+                JOptionPane.showMessageDialog(this, "Error updating slot status!");
+                return;
+            }
+
+            LocalDateTime exitTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            StringBuilder exitInfo = new StringBuilder();
+            exitInfo.append("=== VEHICLE EXIT COMPLETED ===\n");
+            exitInfo.append("Receipt No: ").append(receiptNo).append("\n");
+            exitInfo.append("Driver Name: ").append(currentDriverName).append("\n");
+            exitInfo.append("License Plate: ").append(currentLicensePlate).append("\n");
+            exitInfo.append("Slot No: ").append(currentSlotNo).append(" (Now Available)\n");
+            exitInfo.append("Vehicle Type: ").append(currentVehicleType).append("\n");
+            exitInfo.append("Entry Time: ").append(currentEntryTime).append("\n");
+            exitInfo.append("Exit Time: ").append(exitTime.format(formatter)).append("\n");
+            exitInfo.append("Hours Parked: ").append(String.format("%.2f", currentHoursParked)).append("\n");
+            exitInfo.append("Required Payment: Rs. ").append(String.format("%.2f", currentPayment)).append("\n");
+            exitInfo.append("Amount Received: Rs. ").append(paymentText).append("\n");
+
+            if (enteredPayment > currentPayment) {
+                exitInfo.append("Change Returned: Rs. ").append(String.format("%.2f", enteredPayment - currentPayment)).append("\n");
+            }
+
+            exitInfo.append("Payment Status: PAID\n");
+            exitInfo.append("Status: Vehicle exited successfully\n");
+            exitInfo.append("===============================\n\n");
+
+            FileWriter writer = new FileWriter("ExitInfo.txt", true);
+            writer.write(exitInfo.toString());
+            writer.close();
+
+            displayPane.setText(exitInfo.toString());
+
+            String successMessage = "Vehicle exit processed successfully!\n" +
+                    "Slot " + currentSlotNo + " is now available.\n" +
+                    "Required Payment: Rs. " + String.format("%.2f", currentPayment) + "\n" +
+                    "Amount Received: Rs. " + paymentText + " - PAID";
+
+            if (enteredPayment > currentPayment) {
+                successMessage += "\nChange to return: Rs. " + String.format("%.2f", enteredPayment - currentPayment);
+            }
+
+            JOptionPane.showMessageDialog(this, successMessage);
+
+            receiptNoField.setText("Enter Receipt Number");
+            receiptNoField.setForeground(Color.GRAY);
+            paymentField.setText("Enter Payment Amount");
+            paymentField.setForeground(Color.GRAY);
+            paidCheckBox.setSelected(false);
+            currentSlotNo = 0;
+            currentDriverName = "";
+            currentLicensePlate = "";
+            currentVehicleType = "";
+            currentEntryTime = "";
+            currentPayment = 0.0;
+            currentHoursParked = 0.0f;
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving exit information: " + e.getMessage());
+        }
+    }
+
+    private boolean isVehicleAlreadyExited(String receiptNo) {
+        try {
+            File exitFile = new File("ExitInfo.txt");
+            if (!exitFile.exists()) {
+                return false;
+            }
+
+            BufferedReader reader = new BufferedReader(new FileReader(exitFile));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("Receipt No: " + receiptNo)) {
+                    reader.close();
+                    return true;
+                }
+            }
+            reader.close();
+            return false;
+
+        } catch (IOException e) {
+            System.err.println("Error checking exit records: " + e.getMessage());
+            return false;
+        }
+    }
+
+    private boolean updateSlotStatus(int slotNumber, boolean occupy) {
+        ArrayList<Object> lines = new ArrayList<>();
+        boolean updated = false;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("parking_slots.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.trim().split(" ");
+                if (parts.length >= 4 && parts[0].equals("Slot")) {
+                    int fileSlotId = Integer.parseInt(parts[1]);
+                    if (fileSlotId == slotNumber) {
+                        String category = parts[2];
+                        String newStatus = occupy ? "Taken" : "Available";
+                        lines.add("Slot " + slotNumber + " " + category + " " + newStatus);
+                        updated = true;
+                    } else {
+                        lines.add(line);
+                    }
+                } else {
+                    lines.add(line);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading parking_slots.txt file: " + e.getMessage());
+            return false;
+        }
+
+        if (updated) {
+            try (PrintWriter writer = new PrintWriter(new FileWriter("parking_slots.txt"))) {
+                for (Object line : lines) {
+                    writer.println(line);
+                }
+                System.out.println("Successfully updated slot " + slotNumber + " status to " + (occupy ? "Taken" : "Available"));
+                return true;
+            } catch (IOException e) {
+                System.err.println("Error writing to parking_slots.txt file: " + e.getMessage());
+            }
+        }
+
+        return false;
+    }
+
+    private class PaymentCalculator {
+        private Map<String, Double> baseRates;
+
+        public PaymentCalculator() {
+            this.baseRates = new HashMap<>();
+            loadRates();
+        }
+
+        private void loadRates() {
+
+            try (BufferedReader reader = new BufferedReader(new FileReader("Payment.txt"))) {
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    String[] parts = line.split(" ");
+                    if (parts.length >= 2) {
+                        String vehicleType = parts[0].toLowerCase();
+                        double rate = Double.parseDouble(parts[1]);
+                        baseRates.put(vehicleType, rate);
+                    }
+                }
+            } catch (IOException | NumberFormatException e) {
+                setDefaultRates();
+            }
+        }
+
+        private void setDefaultRates() {
+            baseRates.put("car", 70.0);
+            baseRates.put("bike", 50.0);
+            baseRates.put("jeep", 100.0);
+            baseRates.put("wagon", 150.0);
+            baseRates.put("truck", 250.0);
+            baseRates.put("handicap", 20.0);
+        }
+
+        public double calculatePayment(String vehicleType, double hoursParked) {
+            String type = vehicleType.toLowerCase();
+            double baseRate = baseRates.getOrDefault(type, 50.0);
+            double actualHours = Math.max(hoursParked, 1.0);
+            return baseRate * Math.ceil(actualHours);
+        }
+
+        public double calculateHoursParked(String entryTime) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime entry = LocalDateTime.parse(entryTime, formatter);
+                LocalDateTime now = LocalDateTime.now();
+
+                long minutes = java.time.temporal.ChronoUnit.MINUTES.between(entry, now);
+                return Math.max(minutes / 60.0, 0.0);
+            } catch (Exception e) {
+                return 1.0;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new LoginPage().setVisible(true);
+    }
+}
+==================================================================================================================
+
+Search:
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.io.*;
+
+public class Search extends JFrame {
+
+    private JLabel titleLabel;
+    private JTextField receiptField;
+    private JTextPane resultPane;
+    private JScrollPane scrollPane;
+    private JButton searchButton, backButton;
+
+    public Search() {
+        initComponents();
+        setupPlaceholder();
+        setupFrame();
+    }
+
+    private void initComponents() {
+        titleLabel = new JLabel("Search Vehicle");
+        receiptField = new JTextField();
+        resultPane = new JTextPane();
+        searchButton = new JButton("Search");
+        backButton = new JButton("← Back");
+
+        titleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 36));
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setBackground(Color.BLACK);
+
+        backButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        backButton.addActionListener(this::backButtonClicked);
+
+        searchButton.addActionListener(this::searchButtonClicked);
+
+        resultPane.setEditable(false);
+        scrollPane = new JScrollPane(resultPane);
+
+        setLayout(new BorderLayout());
+
+        JPanel mainPanel = new JPanel();
+        GroupLayout layout = new GroupLayout(mainPanel);
+        mainPanel.setLayout(layout);
+
+        layout.setHorizontalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(189, 189, 189)
+                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(receiptField, GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                                        .addComponent(scrollPane))
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(300, 300, 300)
+                                .addComponent(searchButton)
+                                .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        layout.setVerticalGroup(
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(backButton)
+                                .addGap(18, 18, 18)
+                                .addComponent(titleLabel, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)
+                                .addComponent(receiptField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 257, GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(searchButton)
+                                .addContainerGap(25, Short.MAX_VALUE))
+        );
+
+        add(mainPanel, BorderLayout.CENTER);
+    }
+
+    private void setupPlaceholder() {
+        receiptField.setText("Enter Receipt Number");
+        receiptField.setForeground(Color.GRAY);
+
+        receiptField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (receiptField.getText().equals("Enter Receipt Number")) {
+                    receiptField.setText("");
+                    receiptField.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (receiptField.getText().isEmpty()) {
+                    receiptField.setForeground(Color.GRAY);
+                    receiptField.setText("Enter Receipt Number");
+                }
+            }
+        });
+    }
+
+    private void backButtonClicked(ActionEvent evt) {
+        this.dispose();
+        new AdminPanel().setVisible(true);
+    }
+
+    private void searchButtonClicked(ActionEvent evt) {
+        String receiptNo = receiptField.getText().trim();
+
+        if (receiptNo.isEmpty() || receiptNo.equals("Enter Receipt Number")) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid receipt number!");
+            return;
+        }
+
+        searchVehicleDetails(receiptNo);
+    }
+
+    private void searchVehicleDetails(String receiptNo) {
+        StringBuilder searchResults = new StringBuilder();
+        boolean foundInCarInfo = false;
+        boolean foundInExitInfo = false;
+
+        foundInCarInfo = searchInCarInfo(receiptNo, searchResults);
+
+        foundInExitInfo = searchInExitInfo(receiptNo, searchResults);
+
+        if (!foundInCarInfo && !foundInExitInfo) {
+            searchResults.append("=== SEARCH RESULTS ===\n\n");
+            searchResults.append("Receipt Number: ").append(receiptNo).append("\n");
+            searchResults.append("Status: NOT FOUND\n\n");
+            searchResults.append("This receipt number was not found in our records.\n");
+            searchResults.append("Please check the receipt number and try again.\n");
+            searchResults.append("========================\n");
+
+            JOptionPane.showMessageDialog(this, "Receipt number '" + receiptNo + "' not found in records!");
+        }
+
+        resultPane.setText(searchResults.toString());
+    }
+
+    private boolean searchInCarInfo(String receiptNo, StringBuilder results) {
+        try {
+            File carInfoFile = new File("CarInfo.txt");
+            if (!carInfoFile.exists()) {
+                return false;
+            }
+
+            BufferedReader reader = new BufferedReader(new FileReader(carInfoFile));
+            String line;
+            StringBuilder vehicleInfo = new StringBuilder();
+            boolean found = false;
+            boolean inVehicleBlock = false;
+
+            String driverName = "";
+            String licensePlate = "";
+            String slotNo = "";
+            String vehicleType = "";
+            String entryTime = "";
+            String hoursParked = "";
+            String totalPayment = "";
+
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("=== VEHICLE ENTRY INFORMATION ===")) {
+                    vehicleInfo = new StringBuilder();
+                    inVehicleBlock = true;
+                    driverName = licensePlate = slotNo = vehicleType = entryTime = hoursParked = totalPayment = "";
+                    continue;
+                }
+
+                if (inVehicleBlock) {
+                    if (line.contains("Receipt No: " + receiptNo)) {
+                        found = true;
+                    }
+
+                    if (line.startsWith("Driver Name: ")) {
+                        driverName = line.substring("Driver Name: ".length()).trim();
+                    }
+                    if (line.startsWith("License Plate: ")) {
+                        licensePlate = line.substring("License Plate: ".length()).trim();
+                    }
+                    if (line.startsWith("Slot No: ")) {
+                        slotNo = line.substring("Slot No: ".length()).trim();
+                    }
+                    if (line.startsWith("Vehicle Type: ")) {
+                        vehicleType = line.substring("Vehicle Type: ".length()).trim();
+                    }
+                    if (line.startsWith("Entry Time: ")) {
+                        entryTime = line.substring("Entry Time: ".length()).trim();
+                    }
+                    if (line.startsWith("Hours Parked: ")) {
+                        hoursParked = line.substring("Hours Parked: ".length()).trim();
+                    }
+                    if (line.startsWith("Total Payment: Rs. ")) {
+                        totalPayment = line.substring("Total Payment: Rs. ".length()).trim();
+                    }
+
+                    if (line.contains("=====================================")) {
+                        if (found) {
+                            results.append("=== VEHICLE FOUND (CURRENTLY PARKED) ===\n\n");
+                            results.append("Receipt No: ").append(receiptNo).append("\n");
+                            results.append("Driver Name: ").append(driverName).append("\n");
+                            results.append("License Plate: ").append(licensePlate).append("\n");
+                            results.append("Slot No: ").append(slotNo).append("\n");
+                            results.append("Vehicle Type: ").append(vehicleType).append("\n");
+                            results.append("Entry Time: ").append(entryTime).append("\n");
+                            results.append("Hours Parked: ").append(hoursParked).append("\n");
+                            results.append("Total Payment Due: Rs. ").append(totalPayment).append("\n");
+                            results.append("Status: CURRENTLY PARKED\n");
+                            results.append("==========================================\n\n");
+
+                            reader.close();
+                            return true;
+                        }
+                        inVehicleBlock = false;
+                        found = false;
+                    }
+                }
+            }
+            reader.close();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading vehicle information: " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error processing vehicle data: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    private boolean searchInExitInfo(String receiptNo, StringBuilder results) {
+        try {
+            File exitInfoFile = new File("ExitInfo.txt");
+            if (!exitInfoFile.exists()) {
+                return false;
+            }
+
+            BufferedReader reader = new BufferedReader(new FileReader(exitInfoFile));
+            String line;
+            boolean found = false;
+            boolean inExitBlock = false;
+
+            String driverName = "";
+            String licensePlate = "";
+            String slotNo = "";
+            String vehicleType = "";
+            String entryTime = "";
+            String exitTime = "";
+            String hoursParked = "";
+            String requiredPayment = "";
+            String amountReceived = "";
+            String changeReturned = "";
+            String paymentStatus = "";
+
+            while ((line = reader.readLine()) != null) {
+                if (line.contains("=== VEHICLE EXIT COMPLETED ===")) {
+                    inExitBlock = true;
+                    driverName = licensePlate = slotNo = vehicleType = entryTime = exitTime =
+                            hoursParked = requiredPayment = amountReceived = changeReturned = paymentStatus = "";
+                    continue;
+                }
+
+                if (inExitBlock) {
+                    if (line.contains("Receipt No: " + receiptNo)) {
+                        found = true;
+                    }
+
+                    if (line.startsWith("Driver Name: ")) {
+                        driverName = line.substring("Driver Name: ".length()).trim();
+                    }
+                    if (line.startsWith("License Plate: ")) {
+                        licensePlate = line.substring("License Plate: ".length()).trim();
+                    }
+                    if (line.startsWith("Slot No: ")) {
+                        slotNo = line.substring("Slot No: ".length()).trim();
+                        // Remove "(Now Available)" if present
+                        if (slotNo.contains("(")) {
+                            slotNo = slotNo.substring(0, slotNo.indexOf("(")).trim();
+                        }
+                    }
+                    if (line.startsWith("Vehicle Type: ")) {
+                        vehicleType = line.substring("Vehicle Type: ".length()).trim();
+                    }
+                    if (line.startsWith("Entry Time: ")) {
+                        entryTime = line.substring("Entry Time: ".length()).trim();
+                    }
+                    if (line.startsWith("Exit Time: ")) {
+                        exitTime = line.substring("Exit Time: ".length()).trim();
+                    }
+                    if (line.startsWith("Hours Parked: ")) {
+                        hoursParked = line.substring("Hours Parked: ".length()).trim();
+                    }
+                    if (line.startsWith("Required Payment: Rs. ")) {
+                        requiredPayment = line.substring("Required Payment: Rs. ".length()).trim();
+                    }
+                    if (line.startsWith("Amount Received: Rs. ")) {
+                        amountReceived = line.substring("Amount Received: Rs. ".length()).trim();
+                    }
+                    if (line.startsWith("Change Returned: Rs. ")) {
+                        changeReturned = line.substring("Change Returned: Rs. ".length()).trim();
+                    }
+                    if (line.startsWith("Payment Status: ")) {
+                        paymentStatus = line.substring("Payment Status: ".length()).trim();
+                    }
+
+                    if (line.contains("===============================")) {
+                        if (found) {
+                            results.append("=== VEHICLE FOUND (ALREADY EXITED) ===\n\n");
+                            results.append("Receipt No: ").append(receiptNo).append("\n");
+                            results.append("Driver Name: ").append(driverName).append("\n");
+                            results.append("License Plate: ").append(licensePlate).append("\n");
+                            results.append("Slot No: ").append(slotNo).append("\n");
+                            results.append("Vehicle Type: ").append(vehicleType).append("\n");
+                            results.append("Entry Time: ").append(entryTime).append("\n");
+                            results.append("Exit Time: ").append(exitTime).append("\n");
+                            results.append("Hours Parked: ").append(hoursParked).append("\n");
+                            results.append("Required Payment: Rs. ").append(requiredPayment).append("\n");
+                            results.append("Amount Received: Rs. ").append(amountReceived).append("\n");
+                            if (!changeReturned.isEmpty()) {
+                                results.append("Change Returned: Rs. ").append(changeReturned).append("\n");
+                            }
+                            results.append("Payment Status: ").append(paymentStatus).append("\n");
+                            results.append("Status: VEHICLE EXITED\n");
+                            results.append("========================================\n\n");
+
+                            reader.close();
+                            return true;
+                        }
+                        inExitBlock = false;
+                        found = false;
+                    }
+                }
+            }
+            reader.close();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error reading exit information: " + e.getMessage());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error processing exit data: " + e.getMessage());
+        }
+
+        return false;
+    }
+
+    private void setupFrame() {
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setTitle("Search Vehicle");
+        setName("Search");
+        setResizable(false);
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    public static void main(String[] args) {
+        new LoginPage().setVisible(true);
+    }
+}
+==========================================================================================================================

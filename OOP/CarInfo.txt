@@ -1,0 +1,98 @@
+Driver Name: null
+Licence Plate: nullReceipt No: null
+Slot No :0Color: null
+Hour Parked: 0.0=== VEHICLE ENTRY INFORMATION ===
+
+Driver Name: Maaz
+License Plate: JT-238
+Receipt No: 2
+Slot No: 11 (General)
+Color: Red
+Hours Parked: 0.333334
+Vehicle Type: Jeep
+Entry Time: 2025-06-01 18:49:11
+Handicap: No
+Current Admin: Ijlal
+=====================================
+PAYMENT CALCULATION:
+Base Rate: Rs. 100.00 per hour
+Hours: 0.333334
+Total Payment: Rs. 33.33
+=====================================
+
+=== VEHICLE ENTRY INFORMATION ===
+
+Driver Name: huzaifa
+License Plate: 12
+Receipt No: 3
+Slot No: 12 (General)
+Color: black
+Hours Parked: 0.333334
+Vehicle Type: Wagon
+Entry Time: 2025-06-01 19:13:41
+Handicap: No
+Current Admin: Ijlal
+=====================================
+PAYMENT CALCULATION:
+Base Rate: Rs. 150.00 per hour
+Hours: 0.333334
+Total Payment: Rs. 50.00
+=====================================
+
+=== VEHICLE ENTRY INFORMATION ===
+
+Driver Name: Hanzla
+License Plate: 1234
+Receipt No: 5
+Slot No: 13 (General)
+Color: White
+Hours Parked: 0.16
+Vehicle Type: Car
+Entry Time: 2025-06-01 19:32:24
+Handicap: No
+Current Admin: Ijlal
+=====================================
+PAYMENT CALCULATION:
+Base Rate: Rs. 70.00 per hour
+Hours: 0.16
+Total Payment: Rs. 11.20
+=====================================
+
+=== VEHICLE ENTRY INFORMATION ===
+
+Driver Name: huzaifa
+License Plate: 123
+Receipt No: 10
+Slot No: 50 (General)
+Color: black
+Hours Parked: 1.0
+Vehicle Type: Car
+Entry Time: 2025-06-01 19:37:17
+Handicap: No
+Current Admin: Ijlal
+=====================================
+PAYMENT CALCULATION:
+Base Rate: Rs. 70.00 per hour
+Hours: 1.0
+Total Payment: Rs. 70.00
+=====================================
+
+=== VEHICLE ENTRY INFORMATION ===
+
+Driver Name: Huzaifa
+License Plate: jt-238
+Receipt No: 36
+Slot No: 85 (General)
+Color: black
+Hours Parked: 2.0
+Vehicle Type: Car
+Entry Time: 2025-06-13 17:28:03
+Handicap: No
+Current Admin: Ijlal
+=====================================
+PAYMENT CALCULATION:
+Base Rate: Rs. 70.00 per hour
+Hours: 2.0
+Total Payment: Rs. 140.00
+=====================================
+
